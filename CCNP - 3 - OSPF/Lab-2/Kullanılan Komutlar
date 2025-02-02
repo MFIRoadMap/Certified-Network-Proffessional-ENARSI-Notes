@@ -1,0 +1,196 @@
+R1
+***************************************************
+en
+conf ter
+
+hostname R1
+
+int f 1/0
+ip address 12.0.0.1 255.255.255.0
+no sh
+exit
+router ospf 10
+network 0.0.0.0 255.255.255.255 area 123
+exit
+
+
+
+
+
+
+
+R2
+***************************************************
+en
+conf ter
+
+hostname R2
+
+int f 1/0
+ip address 24.0.0.2 255.255.255.0
+no sh
+exit
+int f 1/1
+ip address 12.0.0.2 255.255.255.0
+no sh
+exit
+int f 2/0
+ip address 23.0.0.2 255.255.255.0
+no sh
+exit
+
+router ospf 10
+network 24.0.0.2 0.0.0.0 area 0
+network 12.0.0.2 0.0.0.0 area 123
+network 23.0.0.2 0.0.0.0 area 0
+exit
+
+
+
+
+
+
+
+
+
+R3
+***************************************************
+en
+conf ter
+
+hostname R3
+
+int f 1/0
+ip address 35.0.0.3 255.255.255.0
+no sh
+exit
+int f 2/1
+ip address 13.0.0.3 255.255.255.0
+no sh
+exit
+int f 2/0
+ip address 23.0.0.3 255.255.255.0
+no sh
+exit
+
+
+router ospf 10
+network 35.0.0.3 0.0.0.0 area 0
+network 13.0.0.3 0.0.0.0 area 123
+network 23.0.0.3 0.0.0.0 area 0
+exit
+
+
+
+
+
+
+
+
+R4
+***************************************************
+en
+conf ter
+
+hostname R4
+
+int f 1/1
+ip address 24.0.0.4 255.255.255.0
+no sh
+exit
+int f 1/0
+ip address 46.0.0.4 255.255.255.0
+no sh
+exit
+int f 2/0
+ip address 45.0.0.4 255.255.255.0
+no sh
+exit
+
+router ospf 10
+network 24.0.0.4 0.0.0.0 area 0
+network 46.0.0.4 0.0.0.0 area 456
+network 45.0.0.4 0.0.0.0 area 0
+exit
+
+#LSA Type1 ile öğrendiği rotaya öncelik verdiğini görmek için kapatıldı. Artık 50.0.0.5 adresine neredne gittiğine bakalbilirsin
+int f 2/0
+shut
+exit
+
+
+
+
+
+
+
+R5
+***************************************************
+en
+conf ter
+
+hostname R5
+
+int f 1/1
+ip address 35.0.0.5 255.255.255.0
+no sh
+exit
+int f 2/0
+ip address 56.0.0.5 255.255.255.0
+no sh
+exit
+int f 2/1
+ip address 45.0.0.5 255.255.255.0
+no sh
+exit
+int loopback 0
+ip address 50.0.0.5 255.255.255.0
+exit
+
+
+router ospf 10
+network 35.0.0.5 0.0.0.0 area 0
+network 56.0.0.5 0.0.0.0 area 456
+network 45.0.0.5 0.0.0.0 area 0
+network 50.0.0.5 0.0.0.0 area 0
+exit
+
+
+
+
+
+
+
+
+
+R6
+***************************************************
+en
+conf ter
+
+hostname R6
+
+int f 1/1
+ip address 46.0.0.6 255.255.255.0
+no sh
+exit
+int f 2/1
+ip address 56.0.0.6 255.255.255.0
+no sh
+exit
+int loopback 0
+ip address 60.0.0.6 255.255.255.0
+exit
+
+router ospf 10
+network 0.0.0.0 255.255.255.255 area 456
+exit
+
+
+
+
+
+
+
+
+
